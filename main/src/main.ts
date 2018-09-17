@@ -16,9 +16,9 @@ const processArgs = process.argv || []
 const isAutomation = processArgs.find(f => f.indexOf("--test-type=webdriver") >= 0)
 const isDevelopment = process.env.NODE_ENV === "development" || process.env.ONI_WEBPACK_LOAD === "1"
 const isDebug = process.argv.filter(arg => arg.indexOf("--debug") >= 0).length > 0
-const isDisableHardwareAcceleration =
-    process.argv.find(arg => arg.indexOf("--disable-hardware-acceleration") >= 0) ||
-    PersistentSettings.get("disable_hardware_acceleration")
+const isDisableHardwareAcceleration = process.argv.find(
+    arg => arg.indexOf("--disable-hardware-acceleration") >= 0,
+)
 
 if (isAutomation) {
     Log.setVerbose(true)
@@ -95,7 +95,9 @@ const activeWindow = () => {
     return windows.filter(w => w.isFocused())[0] || null
 }
 
-if (isDisableHardwareAcceleration) app.disableHardwareAcceleration()
+if (isDisableHardwareAcceleration) {
+    app.disableHardwareAcceleration()
+}
 
 // Only enable 'single-instance' mode when we're not in the hot-reload mode
 // Otherwise, all other open instances will also pick up the webpack bundle
